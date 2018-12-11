@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -17,7 +17,7 @@ public class Net : MonoBehaviour {
     private static ConnectionConfig config;
     private static byte reliable;
     private static byte unreliable;
-    private byte[] buffer = new byte[65535];
+    private byte[] buffer = new byte[1024];
 
     private void Start() {
 
@@ -25,13 +25,9 @@ public class Net : MonoBehaviour {
         if (config == null) {
 
             var globalConfig = new GlobalConfig();
-            globalConfig.MaxPacketSize = 65535;
             NetworkTransport.Init(globalConfig);
 
             config = new ConnectionConfig();
-            config.PacketSize = 32768;
-            config.FragmentSize = 16384;
-
             reliable = config.AddChannel(QosType.ReliableFragmented);
             unreliable = config.AddChannel(QosType.UnreliableSequenced);
 
